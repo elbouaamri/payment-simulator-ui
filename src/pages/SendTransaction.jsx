@@ -7,6 +7,9 @@ const defaultForm = {
     pan: '4111111111111111',
     expiry: '2812',
     amount: 10000,
+    amountSettlement: 10000,
+    amountCardholderBilling: 10000,
+    merchantType: '5411',
     currency: '504',
     terminalId: 'TERM0001',
     merchantId: '',
@@ -43,6 +46,8 @@ export default function SendTransaction() {
                 ...form,
                 type: type.toUpperCase(),
                 amount: Number(form.amount),
+                amountSettlement: Number(form.amountSettlement),
+                amountCardholderBilling: Number(form.amountCardholderBilling),
                 profileId: form.profileId ? Number(form.profileId) : null,
             };
             const res = await sendTransaction(type, payload);
@@ -95,6 +100,18 @@ export default function SendTransaction() {
                         <div className="form-group">
                             <label>Amount (minor units)</label>
                             <input name="amount" type="number" value={form.amount} onChange={handleChange} required min={1} />
+                        </div>
+                        <div className="form-group">
+                            <label>Amount Settlement (DE5)</label>
+                            <input name="amountSettlement" type="number" value={form.amountSettlement} onChange={handleChange} required min={1} />
+                        </div>
+                        <div className="form-group">
+                            <label>Amount Cardholder Billing (DE6)</label>
+                            <input name="amountCardholderBilling" type="number" value={form.amountCardholderBilling} onChange={handleChange} required min={1} />
+                        </div>
+                        <div className="form-group">
+                            <label>Merchant Type (DE18)</label>
+                            <input name="merchantType" value={form.merchantType} onChange={handleChange} required maxLength={4} placeholder="e.g. 5411" />
                         </div>
                         <div className="form-group">
                             <label>Currency</label>
